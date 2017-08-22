@@ -82,6 +82,7 @@ A boolean value telling if you want to bump your Config.xml. As a default the ta
 
 ### Usage Examples
 
+```js
 grunt.initConfig({
   gplay: {
     options: {
@@ -92,6 +93,7 @@ grunt.initConfig({
     },
   }
 });
+```
 
 ## Contributing
 Recognition to ...
