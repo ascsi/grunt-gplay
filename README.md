@@ -2,25 +2,36 @@
 
 > Grunt task to deploy a Cordova based app to Google Play
 
-## Getting Started
-This plugin requires Grunt `~0.4.5`
+```shell
+npm install grunt-gplay --save-dev
+```
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
+## Getting Started
+The first APK of your App needs to be uploaded via the web interface. This is to register the application id and cannot be done using the Play Developer API. For all subsequent uploads and changes this plugin can be used.
+
+To use the publisher plugin you have to create a service account for your existing Google Play Account. See https://developers.google.com/android-publisher/getting_started for more information.
+
+You need to create a service account, which can be done via the GCloud developer console.
+https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts.
+When you have made the service account you have a so called service account email address and a secret.json file. 
+
+In Google play developer console you can add the service account to your Google Play account.
+
+
+## The "gplay" task
+
+### Overview
+Install **grunt-gplay** 
 
 ```shell
 npm install grunt-gplay --save-dev
 ```
 
-Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+Add task to your Gruntfile
 
 ```js
 grunt.loadNpmTasks('grunt-gplay');
 ```
-
-## The "gplay" task
-
-### Overview
-In your project's Gruntfile, add a section named `gplay` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
@@ -37,17 +48,24 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.APK
 Type: `String`
-Default value: `',  '`
 
-A string value that is used to do something with whatever.
+A string value that holds the path and the name of your APK file. For instance 'apk':'./platforms/android/build/android-release.apk'
 
-#### options.punctuation
+#### options.secret
 Type: `String`
 Default value: `'.'`
 
-A string value that is used to do something else with whatever else.
+A string value that hold the path to the Google service account JSON file. For instance 'secret': './secret.JSON'.
+
+#### options.secret
+Type: `String`
+Default value: `'.'`
+
+A string value that hold the path to the Google service account JSON file. For instance 'secret': './secret.JSON'.
+
+
 
 ### Usage Examples
 
