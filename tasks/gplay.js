@@ -8,6 +8,12 @@
 
 'use strict';
 
+var util = require('util');
+var google = require('googleapis');
+var Promise = require('bluebird');
+var _ = require('lodash');
+
+
 module.exports = function(grunt) {
 
   grunt.registerMultiTask('gplay', 'Grunt task to deploy a Cordova based app to Google Play', function() {
@@ -163,6 +169,54 @@ module.exports = function(grunt) {
 	      done();
 	    });
 	  });
+	}
+	
+	function bump(){
+		
+		var args = this.args;
+		if (args.length === 0)
+			args = [ 'sub' ];
+
+		// bumping package.json file
+		grunt.log.verbose.ok('reading local package.json file');
+		grunt.file.defaultEncoding = 'utf8';
+		var pkg = grunt.file.readJSON('package.json');
+		var parts = pkg.version.split('.');
+		var oldVersion = "version=\"" + pkg.version + "\"";
+
+		for (var i = 0; i < parts.length; ++i) {
+			switch (i) {
+			case 0:
+				if (args.indexOf('major') !== -1) {
+					parts[i] = (Number(parts[i]) + 1).toString();
+					parts[1] = '0';
+					parts[2] = '0';
+					pkg.version = parts[0] + '.' + parts[1] + '.' + parts[2];
+				}
+				break;
+			case 1:
+				if (args.indexOf('minor') !== -1) {
+					parts[i] = (Number(parts[i]) + 1).toString();
+					parts[2] = '0';
+					pkg.version = parts[0] + '.' + parts[1] + '.' + parts[2];
+				}
+				break;
+			case 2:
+				if (args.indexOf('sub') !== -1) {
+					parts[i] = (Number(parts[i]) + 1).toString();
+					pkg.version = parts[0] + '.' + parts[1] + '.' + parts[2];
+				}
+			}
+		}
+
+		grunt.file.write('package.json', JSON.stringify(pkg, null, 2));
+		
+		// bumping config.xml file
+		var regex = /(.+)version *= *\"[0-9]+\.?[0-9]+?\.?[0-9]+?\"(.+)/g
+		var config = grunt.file.read('config.xml');
+		config = config.replace(regex, "$1version=\"" +pkg.version + "\"$2");
+		grunt.file.write("config.xml", config);
+		grunt.log.ok('bumped to version ' + pkg.version);
 	}
 	
 });
