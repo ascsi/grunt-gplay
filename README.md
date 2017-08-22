@@ -50,58 +50,51 @@ grunt.initConfig({
 
 #### options.APK
 Type: `String`
+**Required**
 
-A string value that holds the path and the name of your APK file. For instance 'apk':'./platforms/android/build/android-release.apk'
-
-#### options.secret
-Type: `String`
-Default value: `'.'`
-
-A string value that hold the path to the Google service account JSON file. For instance 'secret': './secret.JSON'.
+A string value that holds the path and the name of your APK file.
 
 #### options.secret
 Type: `String`
-Default value: `'.'`
+**Required**
 
 A string value that hold the path to the Google service account JSON file. For instance 'secret': './secret.JSON'.
+
+#### options.package
+Type: `String`
+**Required**
+
+A string value that holds the the package name.
+
+#### options.track
+Type: `String`
+Default value: `'beta'`
+
+A string value, setting which track is relased. Legal values are production, roolout, beta and alfa.
+
+#### options.bump
+Type: `String`, Array of Strings
+Default value: `'sub'`
+
+A boolean value telling if you want to bump your Config.xml. As a default the task will try to bump the sub-version. Legal values are major, minor and sub.
 
 
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  gplay: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
 grunt.initConfig({
   gplay: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      apk: './platforms/android/build/outputs/apk/android-release.apk',
+      secret: 'secret.json',
+      track :'alfa',
+      bump: ['package.json', 'config.xml']
     },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+  }
 });
-```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+Recognition to ...
 
 ## Release History
-_(Nothing yet)_
+First release
