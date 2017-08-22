@@ -73,10 +73,21 @@ Default value: `'beta'`
 A string value, setting which track is relased. Legal values are production, roolout, beta and alfa.
 
 #### options.bump
-Type: `String`, Array of Strings
+Type: `Array`
+
+An array of files to be bumped in version.
+
+#### options.bump.file
+Type: `String`
+
+A string value that hold the path to the file to be version bumped. Files can be XML ( like **config.xml** looking for string "version="x.x.x" and bumping) or JSON (like **package.json**, looking for version : x.x.x and bumping)
+
+#### options.bump.version
+Type: `String`
 Default value: `'sub'`
 
-A boolean value telling if you want to bump your Config.xml. As a default the task will try to bump the sub-version. Legal values are major, minor and sub.
+A string value telling how you want to bump. As a default the task will bump the sub-version. Legal values are major, minor and sub.
+
 
 
 
@@ -89,7 +100,13 @@ grunt.initConfig({
       apk: './platforms/android/build/outputs/apk/android-release.apk',
       secret: 'secret.json',
       track :'alfa',
-      bump: ['package.json', 'config.xml']
+      bump: [{
+          file: 'package.json',
+          version: 'sub'
+        }, {
+          file:'config.xml',
+          version: 'sub'
+        }]
     },
   }
 });
